@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block title %}Edit User{% endblock %}
+{% block content %}
+<h1>Edit User</h1>
+<form action="/users/{{user.id}}/edit" method="POST">
+    <div class="input-group mb-3">
+        <span class="input-group-text" id="first_name_label">First Name</span>
+        <input type="text" class="form-control" id="first_name" name="first_name" aria-describedby="first_name" value="{{user.first_name}}">
+    </div>
+    <div class="input-group mb-3">
+        <span class="input-group-text" id="last_name_label">Last Name</span>
+        <input type="text" class="form-control" id="last_name" name="last_name" aria-describedby="last_name" value="{{user.last_name}}">
+    </div>
+    <div class="input-group mb-3">
+        <span class="input-group-text" id="profile_image_label">Profile Image</span>
+        <input type="text" class="form-control" id="profile_image" name="profile_image" aria-describedby="profile_image" value="{{user.image_url}}">
+    </div>
+    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+        <button class="btn btn-primary" type="submit">Save</button>
+    </div>
+</form>
+{% endblock %}

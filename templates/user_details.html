@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block title %}New User{% endblock %}
+{% block content %}
+<div class="card" style="width: 18rem;">
+    <img src="{{user.image_url}}" class="card-img-top" alt="profile_pic">
+    <div class="card-body">
+        <h5 class="card-title">{{user.first_name}} {{user.last_name}}</h5>
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+
+            <form action="/users/{{user_id}}/delete">
+                <button id="delete" class="btn btn-danger">Delete</button>
+            </form>
+            <form action="/users/{{user_id}}/edit">
+                <button id="edit" class="btn btn-primary ">Edit</button>
+            </form>
+        </div>
+
+
+    </div>
+</div>
+
+
+
+
+
+{% endblock %}

@@ -19,3 +19,9 @@ class User(db.Model):
     image_url = db.Column(db.String(),
                           nullable=False,
                           default='https://cdn0.iconfinder.com/data/icons/ui-3-1/512/user-1024.png')
+
+    @classmethod
+    def get_all_users(cls):
+        return cls.query.all()
+
+

@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block title %}New User{% endblock %}
+{% block content %}
+<h1>Create a User</h1>
+<form action="/users/new" method="POST">
+    <div class="input-group mb-3">
+        <span class="input-group-text" id="first_name_label">First Name</span>
+        <input type="text" class="form-control" id="first_name" name="first_name" aria-describedby="first_name">
+    </div>
+    <div class="input-group mb-3">
+        <span class="input-group-text" id="last_name_label">Last Name</span>
+        <input type="text" class="form-control" id="last_name" name="last_name" aria-describedby="last_name">
+    </div>
+    <div class="input-group mb-3">
+        <span class="input-group-text" id="profile_image_label">First Name</span>
+        <input type="text" class="form-control" id="profile_image" name="profile_image" aria-describedby="profile_image">
+    </div>
+    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+        <button class="btn btn-primary" type="submit">Add</button>
+    </div>
+</form>
+{% endblock %}
