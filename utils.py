@@ -25,3 +25,5 @@ def create_or_update(data, user=None):
 
     db.session.add(user)
     db.session.commit()
+
+    return user

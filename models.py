@@ -22,6 +22,8 @@ class User(db.Model):
 
     @classmethod
     def get_all_users(cls):
-        return cls.query.all()
+        return cls.query.order_by(User.first_name, User.last_name).all()
 
-
+    @property
+    def full_name(self):
+        return f'{self.first_name} {self.last_name}'

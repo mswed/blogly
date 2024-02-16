@@ -31,9 +31,9 @@ def create_app(uri='postgresql:///blogly', echo=True):
     @app.route('/users/new', methods=['POST'])
     def create_new_user():
         data = get_form_data()
-        create_or_update(data)
+        user = create_or_update(data)
 
-        flash(f'Added new user {data.first_name} {data.last_name}')
+        flash(f'Added new user {user.full_name}')
         return redirect('/')
 
     @app.route('/users/<int:user_id>')
