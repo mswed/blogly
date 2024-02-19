@@ -1,5 +1,5 @@
 from app import create_app
-from models import db, User
+from models import db, User, Post
 from unittest import TestCase
 
 
@@ -19,12 +19,15 @@ class TestRoutes(TestCase):
                      image_url='https://upload.wikimedia.org/wikipedia/en/3/38/Roger-Rabbit.png')
         abdalla = User(first_name='Abdalla', last_name='Rantisi')
 
-        db.session.add(bob)
-        db.session.add(mini)
-        db.session.add(jessica)
-        db.session.add(roger)
-        db.session.add(abdalla)
+        db.session.add_all([bob, mini, jessica, roger, abdalla])
 
+        db.session.commit()
+
+        jessica1 = Post(title='This is my first post!', content="I'm not bad, I'm just drawn that way", user_id=3)
+        jessica2 = Post(title='Looking for my husband', content="He's a rabbit you know?", user_id=3)
+        jessica3 = Post(title='Selling a dress', content="It's red and stuff", user_id=3)
+
+        db.session.add_all([jessica1, jessica2, jessica3])
         db.session.commit()
 
     def tearDown(self):
@@ -49,7 +52,7 @@ class TestRoutes(TestCase):
             self.assertIn('Bob Bobertson', html)
             self.assertIn('<a href="/users/3">Jessica Rabbit</a>', html)
 
-    def test_delete(self):
+    def test_user_delete(self):
         with self.app.test_client() as client:
             resp = client.post('/users/2/delete', follow_redirects=True)
             html = resp.get_data(as_text=True)
@@ -70,3 +73,21 @@ class TestRoutes(TestCase):
 
             self.assertEqual(resp.status_code, 200)
             self.assertIn('<a href="/users/4">James Bond</a>', html)
+
+    def test_user_view(self):
+        with self.app.test_client() as client:
+            resp = client.get('/users/3')
+            html = resp.get_data(as_text=True)
+
+            self.assertIn('Jessica Rabbit', html)
+            self.assertIn('Posts', html)
+            self.assertIn('Looking for my husband', html)
+
+    def test_post_delete(self):
+        with self.app.test_client() as client:
+            resp = client.post('/posts/2/delete', follow_redirects=True)
+            html = resp.get_data(as_text=True)
+
+            self.assertEqual(resp.status_code, 200)
+            self.assertIn('Jessica Rabbit', html)
+            self.assertNotIn('Looking for my husband', html)

@@ -1,6 +1,7 @@
-from models import User, db
-from app import app
+from models import User, Post, db
+from app import create_app
 
+app = create_app()
 app.app_context().push()
 
 db.drop_all()
@@ -15,10 +16,13 @@ roger = User(first_name='Roger', last_name='Rabbit',
              image_url='https://upload.wikimedia.org/wikipedia/en/3/38/Roger-Rabbit.png')
 abdalla = User(first_name='Abdalla', last_name='Rantisi')
 
-db.session.add(bob)
-db.session.add(mini)
-db.session.add(jessica)
-db.session.add(roger)
-db.session.add(abdalla)
+db.session.add_all([bob, mini, jessica, roger, abdalla])
+db.session.commit()
 
+jessica1 = Post(title='This is my first post!', content="I'm not bad, I'm just drawn that way", user_id=3)
+jessica2 = Post(title='Looking for my husband', content="He's a rabbit you know?", user_id=3)
+jessica3 = Post(title='Selling a dress', content="It's red and stuff", user_id=3)
+
+
+db.session.add_all([jessica1, jessica2, jessica3])
 db.session.commit()

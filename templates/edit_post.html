@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block title %}Edit Post{% endblock %}
+{% block content %}
+<h1>Edit Post</h1>
+<form action="/posts/{{post.id}}/edit" method="POST">
+    <div class="input-group mb-3">
+        <span class="input-group-text" id="title_label">Title</span>
+        <input type="text" class="form-control" id="title" name="title" aria-describedby="title" value="{{post.title}}">
+    </div>
+    <div class="input-group mb-3">
+        <span class="input-group-text" id="content_label">Last Name</span>
+        <input type="text" class="form-control" id="content" name="content" aria-describedby="content" value="{{post.content}}">
+    </div>
+    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+        <a href="/posts/{{post.id}}" class="btn btn-outline-primary">Cancel</a>
+        <button class="btn btn-primary" type="submit">Edit</button>
+    </div>
+</form>
+{% endblock %}

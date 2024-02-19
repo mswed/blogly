@@ -1,26 +1,35 @@
 {% extends 'base.html' %}
-{% block title %}New User{% endblock %}
+{% block title %}User Details{% endblock %}
 {% block content %}
-<div class="card" style="width: 18rem;">
-    <img src="{{user.image_url}}" class="card-img-top" alt="profile_pic">
-    <div class="card-body">
-        <h5 class="card-title">{{user.first_name}} {{user.last_name}}</h5>
-        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
 
-            <form action="/users/{{user_id}}/delete" method="POST">
+<div class="row justify-content-start">
+    <div class="col-2">
+        <img src="{{user.image_url}}" alt="profile_pic" class="img-thumbnail" style="width:100%">
+    </div>
+    <div class="col-8">
+        <h5>{{user.full_name}}</h5>
+        <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+
+            <form action="/users/{{user.id}}/delete" method="POST">
                 <button id="delete" class="btn btn-danger">Delete</button>
             </form>
-            <form action="/users/{{user_id}}/edit">
+            <form action="/users/{{user.id}}/edit">
                 <button id="edit" class="btn btn-primary ">Edit</button>
             </form>
         </div>
 
+        <div class="mt-5">
+            <h3>Posts</h3>
+            <ul>
+                {% for post in user.posts %}
+                <li><a href="/posts/{{post.id}}"> {{post.title}} </a></li>
+                {% endfor %}
+            </ul>
+            <form action="/users/{{user.id}}/posts/new">
+                <button id="add-post" class="btn btn-primary">Add Post</button>
+            </form>
+        </div>
 
     </div>
 </div>
-
-
-
-
-
-{% endblock %}
+    {% endblock %}

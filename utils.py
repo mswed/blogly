@@ -3,13 +3,10 @@ from models import db, User
 from collections import namedtuple
 
 
-def get_form_data():
-    # import pdb
-    # pdb.set_trace()
+def get_user_form_data():
     first_name = request.form['first_name']
     last_name = request.form['last_name']
     profile_image = request.form['profile_image']
-    print('PROFILE IMAGE', profile_image)
     data = namedtuple('Data', ['first_name', 'last_name', 'profile_image'])
 
     return data(first_name, last_name, profile_image)

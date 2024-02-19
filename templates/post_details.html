@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block title %}{{post.title}}{% endblock %}
+{% block content %}
+
+<div class="row justify-content-start">
+    <h1>{{post.title}}</h1>
+    <p>{{post.content}}</p>
+    <p>By {{post.user.full_name}}</p>
+    <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+
+        <a href="/users/{{post.user.id}}" class="btn btn-outline-primary">Cancel</a>
+
+        <form action="/posts/{{post.id}}/edit">
+            <button id="edit" class="btn btn-primary ">Edit</button>
+        </form>
+
+        <form action="/posts/{{post.id}}/delete" method="POST">
+            <button id="delete" class="btn btn-danger">Delete</button>
+        </form>
+
+    </div>
+</div>
+{% endblock %}
