@@ -116,6 +116,14 @@ def create_app(uri='postgresql:///blogly', echo=True):
         db.session.commit()
 
         return redirect(f'/users/{post_user}')
+
+    ###################################################################################################################
+    # GENERAL ROUTES
+    ###################################################################################################################
+    @app.errorhandler(404)
+    def not_found(e):
+        return render_template('not_found.html'), 404
+
     return app
 
 
