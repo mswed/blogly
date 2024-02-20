@@ -15,9 +15,15 @@ def create_app(uri='postgresql:///blogly', echo=True):
     connect_db(app)
     db.create_all()
 
+    ###################################################################################################################
+    # USER ROUTES
+    ###################################################################################################################
+
     @app.route('/')
     def home():
-        return redirect('/users')
+        posts = Post.query.order_by(Post.created_at.desc()).limit(5).all()
+
+        return render_template('home.html', posts=posts)
 
     @app.route('/users')
     def all_users():
@@ -33,7 +39,8 @@ def create_app(uri='postgresql:///blogly', echo=True):
         data = get_user_form_data()
         user = create_or_update(data)
 
-        flash(f'Added new user {user.full_name}')
+        flash(f'Added new user {user.full_name}', 'text-success')
+
         return redirect('/')
 
     @app.route('/users/<int:user_id>')
@@ -112,4 +119,4 @@ def create_app(uri='postgresql:///blogly', echo=True):
     return app
 
 
-flask_app = create_app()
+flask_app = create_app(echo=True)

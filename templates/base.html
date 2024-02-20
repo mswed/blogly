@@ -11,8 +11,9 @@
 </head>
 <body>
 <div class="container">
-    {% for msg in get_flashed_messages() %}
-    <h2>{{msg}}</h2>
+
+    {% for category, msg in get_flashed_messages(with_categories=True) %}
+    <h2 class="{{category}}">{{msg}}</h2>
     {% endfor %}
     {% block content %}{% endblock %}
 </div>

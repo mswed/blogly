@@ -39,3 +39,7 @@ class Post(db.Model):
     user_id = db.Column(db.Integer(), db.ForeignKey('users.id'))
 
     user = db.relationship('User', backref='posts')
+
+    @property
+    def nice_timestamp(self):
+        return self.created_at.strftime('%b %d, %Y - %H:%M %p')

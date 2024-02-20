@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block title %}Blogy{% endblock %}
+{% block content %}
+<h1>Blogy Recent Posts</h1>
+<ol>
+    {% for post in posts %}
+    <li>
+        <h2>{{post.title}}</h2>
+        <h4>{{post.content}}</h4>
+        <p>By {{post.user.full_name}} On {{post.nice_timestamp}}</p>
+    </li>
+    {% endfor %}
+</ol>
+
+{% endblock %}
