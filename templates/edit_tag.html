@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block title %}Edit Tag{% endblock %}
+{% block content %}
+<h1>Edit Tag</h1>
+<form action="/tags/{{tag.id}}/edit" method="POST">
+    <div class="input-group mb-3">
+        <span class="input-group-text" id="name_label">Title</span>
+        <input type="text" class="form-control" id="tag_name" name="tag_name" aria-describedby="tag_name" value="{{tag.name}}">
+    </div>
+
+    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+        <a href="/tags/{{tag.id}}" class="btn btn-outline-primary">Cancel</a>
+        <button class="btn btn-primary" type="submit">Edit</button>
+    </div>
+</form>
+{% endblock %}

@@ -1,7 +1,7 @@
 """Blogly application."""
 
 from flask import Flask, render_template, redirect, request, flash
-from models import db, connect_db, User, Post
+from models import db, connect_db, User, Post, Tag
 from utils import get_user_form_data, create_or_update
 
 
@@ -117,6 +117,57 @@ def create_app(uri='postgresql:///blogly', echo=True):
 
         return redirect(f'/users/{post_user}')
 
+    ###################################################################################################################
+    # TAG ROUTES
+    ###################################################################################################################
+    @app.route('/tags')
+    def tag_list():
+        tags = Tag.get_all_tags()
+        return render_template('tags.html', tags=tags)
+
+    @app.route('/tags/<int:tag_id>')
+    def show_tag(tag_id):
+        tag = db.get_or_404(Tag, tag_id)
+
+        return render_template('tag_details.html', tag=tag)
+
+    @app.route('/tags/new')
+    def new_tag():
+        return render_template('new_tag.html')
+
+    @app.route('/tags/new', methods=['POST'])
+    def create_new_tag():
+        name = request.form['tag_name']
+        tag = Tag(name=name)
+        db.session.add(tag)
+        db.session.commit()
+
+        return redirect('/tags')
+
+    @app.route('/tags/<int:tag_id>/edit')
+    def edit_tag(tag_id):
+        tag = db.get_or_404(Tag, tag_id)
+
+        return render_template('edit_tag.html', tag=tag)
+
+    @app.route('/tags/<int:tag_id>/edit', methods=['POST'])
+    def update_tag(tag_id):
+        name = request.form['tag_name']
+        tag = db.get_or_404(Tag, tag_id)
+        tag.name = name
+
+        db.session.add(tag)
+        db.session.commit()
+
+        return redirect('/tags')
+
+    @app.route('/tags/<int:tag_id>/delete', methods=['POST'])
+    def delete_tag(tag_id):
+        tag = Tag.query.filter_by(id=tag_id)
+        tag.delete()
+        db.session.commit()
+
+        return redirect(f'/tags')
     ###################################################################################################################
     # GENERAL ROUTES
     ###################################################################################################################
