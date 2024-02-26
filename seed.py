@@ -1,4 +1,4 @@
-from models import User, Post, db
+from models import User, Post, Tag, db
 from app import create_app
 
 app = create_app()
@@ -19,10 +19,19 @@ abdalla = User(first_name='Abdalla', last_name='Rantisi')
 db.session.add_all([bob, mini, jessica, roger, abdalla])
 db.session.commit()
 
+# Add posts
 jessica1 = Post(title='This is my first post!', content="I'm not bad, I'm just drawn that way", user_id=3)
 jessica2 = Post(title='Looking for my husband', content="He's a rabbit you know?", user_id=3)
 jessica3 = Post(title='Selling a dress', content="It's red and stuff", user_id=3)
 
 
 db.session.add_all([jessica1, jessica2, jessica3])
+db.session.commit()
+
+# Add tags
+t1 = Tag(name='cartoon')
+t2 = Tag(name='fun')
+t3 = Tag(name='adventure')
+
+db.session.add_all([t1, t2, t3])
 db.session.commit()

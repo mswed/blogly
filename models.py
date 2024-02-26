@@ -43,3 +43,9 @@ class Post(db.Model):
     @property
     def nice_timestamp(self):
         return self.created_at.strftime('%b %d, %Y - %H:%M %p')
+
+class Tag(db.Model):
+    __tablename__ = 'tags'
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    name = db.Column(db.Text(), nullable=False, unique=True)
