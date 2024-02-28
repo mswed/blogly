@@ -35,3 +35,10 @@ t3 = Tag(name='adventure')
 
 db.session.add_all([t1, t2, t3])
 db.session.commit()
+
+jessica1.tags.append(t1)
+jessica1.tags.append(t2)
+jessica2.tags.append(t3)
+
+db.session.add_all([jessica1, jessica2])
+db.session.commit()

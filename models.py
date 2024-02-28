@@ -58,6 +58,7 @@ class Tag(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.Text(), nullable=False, unique=True)
     posts_tags = db.relationship('PostTag', cascade='all')
+
     @classmethod
     def get_all_tags(cls):
         return cls.query.order_by(Tag.name).all()

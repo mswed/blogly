@@ -6,6 +6,12 @@
     <h1>{{post.title}}</h1>
     <p>{{post.content}}</p>
     <p>By {{post.user.full_name}}</p>
+
+    <p>Tags:
+    {% for tag in post.tags %}
+        <span class="badge bg-success">{{tag.name}}</span>
+    {% endfor %}
+    </p>
     <div class="d-grid gap-2 d-md-flex justify-content-md-start">
 
         <a href="/users/{{post.user.id}}" class="btn btn-outline-primary">Cancel</a>

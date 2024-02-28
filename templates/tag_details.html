@@ -4,6 +4,12 @@
 
 <div class="row justify-content-start">
     <h1>{{tag.name}}</h1>
+    <ul>
+        {% for post in tag.posts %}
+        <li><a href="/posts/{{post.id}}"> {{post.title}} </a> <span>| {{post.nice_timestamp}}</span></li>
+
+        {% endfor %}
+    </ul>
     <div class="d-grid gap-2 d-md-flex justify-content-md-start">
 
         <a href="/tags" class="btn btn-outline-primary">Cancel</a>

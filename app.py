@@ -80,13 +80,23 @@ def create_app(uri='postgresql:///blogly', echo=True):
     @app.route('/users/<int:user_id>/posts/new')
     def new_post(user_id):
         user = User.query.get(user_id)
-        return render_template('new_post.html', user=user)
+        tags = Tag.get_all_tags()
+        return render_template('new_post.html', user=user, tags=tags)
 
     @app.route('/users/<int:user_id>/posts/new', methods=['POST'])
     def create_new_post(user_id):
+        # import pdb
+        # pdb.set_trace()
         title = request.form['title']
         content = request.form['content']
+        tags = []
+        for k, v in request.form.to_dict().items():
+            if k not in ['title', 'content']:
+                t = Tag.query.filter_by(name=k).first()
+                tags.append(t)
         post = Post(title=title, content=content, user_id=user_id)
+        for t in tags:
+            post.tags.append(t)
         db.session.add(post)
         db.session.commit()
         return redirect(f'/users/{user_id}')
@@ -94,16 +104,25 @@ def create_app(uri='postgresql:///blogly', echo=True):
     @app.route('/posts/<int:post_id>/edit')
     def edit_post(post_id):
         post = db.get_or_404(Post, post_id)
-        return render_template('edit_post.html', post=post)
+        tags = Tag.get_all_tags()
+
+        return render_template('edit_post.html', post=post, tags=tags)
 
     @app.route('/posts/<int:post_id>/edit', methods=['POST'])
     def update_post(post_id):
         title = request.form['title']
         content = request.form['content']
+        tags = []
+        for k, v in request.form.to_dict().items():
+            if k not in ['title', 'content']:
+                t = Tag.query.filter_by(name=k).first()
+                tags.append(t)
+
         post = db.get_or_404(Post, post_id)
         if post is not None:
             post.title = title
             post.content = content
+            post.tags = tags
             db.session.add(post)
             db.session.commit()
         return redirect(f'/posts/{post.id}')
@@ -178,4 +197,4 @@ def create_app(uri='postgresql:///blogly', echo=True):
     return app
 
 
-flask_app = create_app(echo=True)
+flask_app = create_app(echo=False)

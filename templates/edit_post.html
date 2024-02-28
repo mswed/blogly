@@ -11,6 +11,18 @@
         <span class="input-group-text" id="content_label">Last Name</span>
         <input type="text" class="form-control" id="content" name="content" aria-describedby="content" value="{{post.content}}">
     </div>
+    <div>
+        {% for tag in tags %}
+        {% if tag in post.tags %}
+        <input type="checkbox" id="{{tag.id}}" name="{{tag.name}}" value="{{tag.name}}" checked>
+        <label for="{{tag.id}}"> {{tag.name}}</label><br>
+        {% else %}
+        <input type="checkbox" id="{{tag.id}}" name="{{tag.name}}" value="{{tag.name}}">
+        <label for="{{tag.id}}"> {{tag.name}}</label><br>
+        {% endif %}
+
+        {% endfor %}
+    </div>
     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
         <a href="/posts/{{post.id}}" class="btn btn-outline-primary">Cancel</a>
         <button class="btn btn-primary" type="submit">Edit</button>

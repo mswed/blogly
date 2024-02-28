@@ -11,6 +11,12 @@
         <span class="input-group-text" id="content_label">Content</span>
         <input type="text" class="form-control" id="content" name="content" aria-describedby="content">
     </div>
+    <div>
+        {% for tag in tags %}
+        <input type="checkbox" id="{{tag.id}}" name="{{tag.name}}" value="{{tag.name}}">
+        <label for="{{tag.id}}"> {{tag.name}}</label><br>
+        {% endfor %}
+    </div>
     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
         <a href="/users/{{user.id}}" class="btn btn-outline-primary">Cancel</a>
         <button class="btn btn-primary" type="submit">Add</button>
